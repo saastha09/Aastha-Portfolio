@@ -19,7 +19,24 @@ export default function NodeGraph({ className }: Props) {
       y: 40 + Math.floor(i / 4) * 70 + Math.random() * 25,
     }));
     const edges = nodes.slice(1).map((_, i) => ({ a: i, b: i + 1, t: Math.random() }));
-    const labels: Record<number, string> = { 1: "lightspeed", 4: "events", 6: "devices", 8: "redis", 10: "mariadb", 12: "api-gateway" };
+    const crossEdges = [
+      { a: 0, b: 5, t: Math.random() },
+      { a: 2, b: 7, t: Math.random() },
+      { a: 4, b: 9, t: Math.random() },
+      { a: 6, b: 11, t: Math.random() },
+      { a: 1, b: 10, t: Math.random() },
+    ];
+    const allEdges = [...edges, ...crossEdges];
+    const labels: Record<number, string> = {
+      0: "go",
+      3: "grpc",
+      4: "events",
+      6: "devices",
+      8: "redis",
+      10: "mariadb",
+      12: "api-gateway",
+    };
+    const start = performance.now();
 
     const draw = () => {
       const rect = canvas.getBoundingClientRect();
@@ -28,12 +45,14 @@ export default function NodeGraph({ className }: Props) {
       ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
       ctx.clearRect(0, 0, rect.width, rect.height);
 
-      edges.forEach((edge) => {
+      const elapsed = (performance.now() - start) * 0.001;
+
+      allEdges.forEach((edge, idx) => {
         const a = nodes[edge.a];
         const b = nodes[edge.b];
-        edge.t = (edge.t + 0.005) % 1;
-        ctx.strokeStyle = "rgba(59,130,246,0.3)";
-        ctx.setLineDash([5, 6]);
+        edge.t = (edge.t + 0.004 + (idx % 3) * 0.001) % 1;
+        ctx.strokeStyle = idx < edges.length ? "rgba(59,130,246,0.32)" : "rgba(6,182,212,0.22)";
+        ctx.setLineDash(idx < edges.length ? [5, 6] : [2, 7]);
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -48,6 +67,14 @@ export default function NodeGraph({ className }: Props) {
       });
 
       nodes.forEach((node, idx) => {
+        const pulse = 0.5 + 0.5 * Math.sin(elapsed * 2 + idx * 0.6);
+        const ring = 5.5 + pulse * 2.4;
+        ctx.strokeStyle = idx % 2 ? "rgba(59,130,246,0.28)" : "rgba(6,182,212,0.22)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, ring, 0, Math.PI * 2);
+        ctx.stroke();
+
         ctx.fillStyle = idx % 2 ? "rgba(59,130,246,0.9)" : "rgba(6,182,212,0.9)";
         ctx.beginPath();
         ctx.arc(node.x, node.y, 4, 0, Math.PI * 2);
