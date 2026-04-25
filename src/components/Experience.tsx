@@ -9,7 +9,8 @@ export default function Experience() {
 
   return (
     <motion.section id="experience" className="mx-auto w-full max-w-6xl px-4 py-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }}>
-      <h2 className="text-3xl font-semibold">Experience</h2>
+      <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">// work</span>
+      <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">Where I've shipped.</h2>
       <div className="mt-8 grid gap-6">
         {experiences.map((exp) => {
           const expanded = active === exp.id;

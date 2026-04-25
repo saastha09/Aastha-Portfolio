@@ -76,7 +76,8 @@ export default function Contact() {
 
   return (
     <section id="contact" className="mx-auto w-full max-w-6xl px-4 py-16">
-      <h2 className="text-3xl font-semibold">Contact</h2>
+      <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">// contact</span>
+      <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">Let&apos;s talk.</h2>
       <p className="mt-2 text-text-secondary">I respond to interesting problems. Reach out.</p>
       <div className="mt-6 space-y-3">
         <div className="flex items-center gap-3"><span>{personal.email}</span><button onClick={copyEmail} className="inline-flex items-center gap-1 rounded border border-border px-2 py-1 text-xs">{copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy</>}</button></div>

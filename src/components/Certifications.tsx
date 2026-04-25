@@ -8,7 +8,8 @@ const iconMap = { brain: Brain, layers: Layers, star: Star };
 export default function Certifications() {
   return (
     <section className="mx-auto w-full max-w-6xl px-4 py-16">
-      <h2 className="text-3xl font-semibold">Certifications</h2>
+      <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">// credentials</span>
+      <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">Certs & wins.</h2>
       <div className="mt-6 flex flex-wrap gap-4">
         {certifications.map((item) => {
           const Icon = iconMap[item.icon as keyof typeof iconMap];

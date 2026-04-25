@@ -13,7 +13,8 @@ export default function Projects() {
 
   return (
     <motion.section id="projects" className="mx-auto w-full max-w-6xl px-4 py-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }}>
-      <h2 className="text-3xl font-semibold">Projects</h2>
+      <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">// projects</span>
+      <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">Things I built.</h2>
       <div className="mt-8 grid gap-6">
         <div className="grid grid-cols-1 gap-4 rounded-2xl border border-accent-cyan/40 bg-bg-secondary p-6 md:grid-cols-[1fr_320px]">
           <div>
