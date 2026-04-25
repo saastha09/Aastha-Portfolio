@@ -3,6 +3,8 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://aastha.dev"),
   title: "Aastha Sharma - Golang Backend Engineer | Distributed Systems",
