@@ -6,6 +6,7 @@ export const personal = {
   location: "Bangalore, India",
   github: "https://github.com/saastha09",
   linkedin: "https://linkedin.com/in/aastha-sharma-906a2720a",
+  cal: "https://cal.com/aastha-sharma-bjlgi7/15min",
   resumeUrl: "/Aastha_Sharma_Resume.pdf",
   photoUrl: "/photo.jpg",
   tagline: "I build distributed systems that don't fall over.",
