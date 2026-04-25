@@ -31,7 +31,7 @@ export const experiences = [
     id: "intimetec",
     company: "In Time Tec",
     role: "Software Engineer",
-    period: "Jul 2024 - Present",
+    period: "Jun 2025 - Present",
     location: "Bangalore, India",
     summary:
       "Sole backend architect for Lightspeed - a distributed IoT/SaaS platform managing 100+ embedded Linux devices across multiple sites.",
@@ -49,7 +49,7 @@ export const experiences = [
     id: "cyberinfra",
     company: "Cyber Infrastructure",
     role: "Junior Software Developer",
-    period: "Apr 2023 - May 2024",
+    period: "Apr 2024 - May 2025",
     location: "Indore, India",
     summary:
       "Built Younified - a 4-microservice platform with REST, gRPC, and GraphQL APIs on a 10-person Agile team.",
