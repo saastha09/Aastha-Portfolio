@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Check, ExternalLink, Calendar, Mail } from "lucide-react";
+import { ExternalLink, Calendar, Mail } from "lucide-react";
 import { personal } from "@/lib/data";
 
 export default function Contact() {
@@ -57,14 +57,14 @@ export default function Contact() {
 
       {/* Heading */}
       <span className="font-mono text-xs text-accent-blue tracking-widest uppercase mb-2 block">
-        // contact
+        {"// contact"}
       </span>
       <h2 className="text-3xl font-bold text-text-primary mt-2 mb-4">
-        Let's talk.
+        Let&apos;s talk.
       </h2>
       <p className="text-text-secondary text-sm max-w-md mb-12">
         I respond to interesting problems, good opportunities, and
-        people who've read more than just my headline.
+        people who&apos;ve read more than just my headline.
       </p>
 
       {/* Three CTA cards */}
