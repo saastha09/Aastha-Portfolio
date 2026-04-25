@@ -11,24 +11,32 @@ export default function Experience() {
     <motion.section id="experience" className="mx-auto w-full max-w-6xl px-4 py-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }}>
       <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">// work</span>
       <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">Where I've shipped.</h2>
-      <div className="mt-8 grid gap-6">
-        {experiences.map((exp) => {
+      <div className="relative mt-8 pl-10">
+        <div className="absolute left-[19px] top-0 bottom-0 w-px bg-gradient-to-b from-[#3B82F6] to-transparent" />
+        <div className="grid gap-6">
+          {experiences.map((exp, index) => {
           const expanded = active === exp.id;
+          const isCurrentRole = index === 0;
           return (
-            <div key={exp.id} className={`rounded-xl border p-5 ${expanded ? "border-accent-blue bg-bg-tertiary" : "border-border bg-bg-secondary"}`}>
+            <div key={exp.id} className={`relative rounded-xl border bg-bg-secondary p-5 ${isCurrentRole ? "border-[rgba(59,130,246,0.4)]" : "border-border"}`}>
+              <span className={`absolute left-[-33px] top-6 h-[10px] w-[10px] rounded-full border-2 transition-colors duration-150 ${expanded ? "border-[#3B82F6] bg-[#3B82F6]" : "border-[#30363d] bg-transparent"}`} />
+              {isCurrentRole && <span className="mb-3 inline-block rounded bg-accent-blue/10 px-2 py-0.5 font-mono text-[10px] text-accent-blue">Current Role</span>}
               <button onClick={() => setActive(expanded ? "" : exp.id)} className="w-full text-left">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-xl font-semibold">{exp.company}</h3>
-                  <span className="font-mono text-xs text-text-muted">{exp.period}</span>
+                  <h3 className="text-lg font-semibold text-text-primary">{exp.company}</h3>
+                  <span className="text-sm font-mono text-text-muted">{exp.period}</span>
                 </div>
-                <p className="text-sm text-text-secondary">{exp.role} • {exp.location}</p>
+                <p className="font-mono text-sm text-text-secondary">{exp.role} • {exp.location}</p>
                 <p className="mt-2 text-sm text-text-secondary">{exp.summary}</p>
+                <p className="mt-3 font-mono text-xs text-text-muted">{expanded ? "↑ collapse" : "↓ expand"}</p>
               </button>
               <AnimatePresence>
                 {expanded && (
-                  <motion.ul initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="mt-4 space-y-2 overflow-hidden text-sm text-text-secondary">
-                    {exp.bullets.map((bullet) => <li key={bullet}>• {bullet}</li>)}
-                  </motion.ul>
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }} className="overflow-hidden">
+                    <ul className="mt-4 space-y-2 text-sm text-text-secondary">
+                      {exp.bullets.map((bullet) => <li key={bullet}>• {bullet}</li>)}
+                    </ul>
+                  </motion.div>
                 )}
               </AnimatePresence>
               <div className="mt-4 flex flex-wrap gap-2">
@@ -36,7 +44,8 @@ export default function Experience() {
               </div>
             </div>
           );
-        })}
+          })}
+        </div>
       </div>
     </motion.section>
   );
