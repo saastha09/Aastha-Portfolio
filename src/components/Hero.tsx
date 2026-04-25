@@ -20,7 +20,7 @@ export default function Hero() {
   const [typed, setTyped] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const typeIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const typeIntervalRef = useRef<number | null>(null);
   const role = useMemo(() => personal.heroTypewriterRoles[roleIndex], [roleIndex]);
 
   useEffect(() => {

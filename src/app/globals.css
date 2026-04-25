@@ -42,22 +42,51 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+  background: #30363d;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: #3b82f6;
 }
 
 ::selection {
-  background: rgb(59 130 246 / 0.3);
+  background: rgb(59 130 246 / 0.25);
+  color: #e6edf3;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotateBorder {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.hero-border-animated {
+  background: linear-gradient(var(--angle, 135deg), #3b82f6, #06b6d4, #3b82f6);
+  background-size: 200% 200%;
+  animation: rotateBorder 4s linear infinite, gradientShift 3s ease infinite;
 }

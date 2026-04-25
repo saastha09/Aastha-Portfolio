@@ -14,6 +14,7 @@ const links = [
 export default function Navbar() {
   const [mobile, setMobile] = useState(false);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [activeSection, setActiveSection] = useState("about");
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as "dark" | "light" | null;
@@ -21,6 +22,27 @@ export default function Navbar() {
     setTheme(next);
     document.documentElement.classList.toggle("light", next === "light");
     document.documentElement.classList.toggle("dark", next === "dark");
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = links.map((link) => link.href.replace("#", ""));
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target.id) setActiveSection(visible[0].target.id);
+      },
+      { rootMargin: "-35% 0px -45% 0px", threshold: [0.15, 0.3, 0.6] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {
@@ -43,7 +65,7 @@ export default function Navbar() {
         </div>
         <div className="hidden items-center gap-6 md:flex">
           {links.map((item) => (
-            <a key={item.href} href={item.href} className="text-sm text-text-secondary transition hover:text-text-primary">
+            <a key={item.href} href={item.href} className={`text-sm transition hover:text-text-primary ${activeSection === item.href.replace("#", "") ? "text-accent-blue" : "text-text-secondary"}`}>
               {item.label}
             </a>
           ))}
@@ -59,7 +81,7 @@ export default function Navbar() {
         <div className="border-t border-border bg-bg-secondary px-4 py-4 md:hidden">
           <div className="flex flex-col gap-3">
             {links.map((item) => (
-              <a key={item.href} href={item.href} onClick={() => setMobile(false)} className="text-text-secondary">
+              <a key={item.href} href={item.href} onClick={() => setMobile(false)} className={`${activeSection === item.href.replace("#", "") ? "text-accent-blue" : "text-text-secondary"}`}>
                 {item.label}
               </a>
             ))}

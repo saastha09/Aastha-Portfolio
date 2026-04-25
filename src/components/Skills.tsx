@@ -29,19 +29,21 @@ function SkillGauge({ name, level }: { name: string; level: number }) {
 
 export default function Skills() {
   return (
-    <motion.section id="skills" className="mx-auto w-full max-w-6xl bg-transparent px-4 py-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }}>
-      <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">// skills</span>
-      <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">What I know.</h2>
-      <div className="mt-8">
-        {skills.map((group) => (
-          <div key={group.category} className="mb-10">
-            <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-text-muted">{group.category}</h3>
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-              {group.items.map((skill) => <SkillGauge key={skill.name} name={skill.name} level={skill.level} />)}
+    <section id="skills" className="mx-auto w-full max-w-6xl bg-transparent px-4 py-16">
+      <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
+        <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-accent-blue">{"// skills"}</span>
+        <h2 className="mt-2 mb-8 text-3xl font-bold text-text-primary">What I know.</h2>
+        <div className="mt-8">
+          {skills.map((group) => (
+            <div key={group.category} className="mb-10">
+              <h3 className="mb-4 font-mono text-xs uppercase tracking-widest text-text-muted">{group.category}</h3>
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                {group.items.map((skill) => <SkillGauge key={skill.name} name={skill.name} level={skill.level} />)}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </motion.section>
+          ))}
+        </div>
+      </motion.div>
+    </section>
   );
 }
