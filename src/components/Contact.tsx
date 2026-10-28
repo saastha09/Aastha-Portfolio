@@ -141,7 +141,7 @@ export default function Contact() {
 
       {/* Bottom note */}
       <p className="mt-10 font-mono text-xs text-text-muted text-center">
-        Based in Bangalore · Open to remote · Dubai · Netherlands · US remote
+        Based in Bangalore · Open to remote roles and relocation
       </p>
 
     </section>

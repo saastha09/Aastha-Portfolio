@@ -7,6 +7,7 @@ import CurrentlyLearning from "@/components/CurrentlyLearning";
 import Experience from "@/components/Experience";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import Lab from "@/components/Lab";
 import Navbar from "@/components/Navbar";
 import OpenToWorkBanner from "@/components/OpenToWorkBanner";
 import Projects from "@/components/Projects";
@@ -23,6 +24,7 @@ export default function Home() {
       <About />
       <Experience />
       <Projects />
+      <Lab />
       <Skills />
       <Certifications />
       <CurrentlyLearning />

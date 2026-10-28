@@ -33,7 +33,7 @@ export default function NodeGraph({ className }: Props) {
       4: "events",
       6: "devices",
       8: "redis",
-      10: "mariadb",
+      10: "nginx",
       12: "api-gateway",
     };
     const start = performance.now();

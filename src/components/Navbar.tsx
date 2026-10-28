@@ -7,6 +7,7 @@ const links = [
   { label: "About", href: "#about" },
   { label: "Work", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Lab", href: "#lab" },
   { label: "Skills", href: "#skills" },
   { label: "Contact", href: "#contact" },
 ];
@@ -54,10 +55,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-40 border-b border-border/80 bg-bg-primary/90 backdrop-blur-sm">
+    <nav className="fixed inset-x-0 top-0 z-40 border-b border-border bg-[color-mix(in_srgb,var(--bg-primary)_90%,transparent)] backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <span className="font-mono text-sm text-accent-blue">aastha.dev</span>
+          <a href="#hero" className="font-mono text-sm text-accent-blue">~/aastha</a>
           <span className="inline-flex items-center gap-2 rounded-full border border-border px-2 py-1 text-xs text-text-secondary">
             <span className="h-2 w-2 animate-pulse-slow rounded-full bg-accent-green" />
             Open to Work
@@ -69,11 +70,11 @@ export default function Navbar() {
               {item.label}
             </a>
           ))}
-          <button onClick={toggleTheme} className="rounded-md border border-border p-2 text-text-secondary">
+          <button onClick={toggleTheme} aria-label="Toggle theme" className="rounded-md border border-border p-2 text-text-secondary">
             {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
         </div>
-        <button className="md:hidden" onClick={() => setMobile((v) => !v)}>
+        <button className="md:hidden" aria-label={mobile ? "Close menu" : "Open menu"} onClick={() => setMobile((v) => !v)}>
           {mobile ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>

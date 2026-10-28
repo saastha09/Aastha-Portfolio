@@ -1,22 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { personal } from "@/lib/data";
+import { heroStats, personal } from "@/lib/data";
+import { GithubIcon } from "./icons";
 import NodeGraph from "./NodeGraph";
 
-const BOOT_LINES = [
-  "> initializing aastha.dev ...",
-  "> role: backend_engineer.go loaded",
-  "> uptime: 99.9%  devices: 100+  status: open",
-  "> ready. press / for terminal easter egg",
-];
-
 export default function Hero() {
-  const [bootText, setBootText] = useState(["", "", "", ""]);
-  const [bootVisible, setBootVisible] = useState(true);
-  const [heroVisible, setHeroVisible] = useState(false);
   const [typed, setTyped] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -24,40 +14,6 @@ export default function Hero() {
   const role = useMemo(() => personal.heroTypewriterRoles[roleIndex], [roleIndex]);
 
   useEffect(() => {
-    let cancelled = false;
-    const runBootSequence = async () => {
-      const nextLines = ["", "", "", ""];
-      for (let lineIndex = 0; lineIndex < BOOT_LINES.length; lineIndex += 1) {
-        const line = BOOT_LINES[lineIndex];
-        for (let charIndex = 0; charIndex < line.length; charIndex += 1) {
-          if (cancelled) return;
-          nextLines[lineIndex] += line[charIndex];
-          setBootText([...nextLines]);
-          await new Promise((resolve) => {
-            window.setTimeout(resolve, 35);
-          });
-        }
-        if (lineIndex < BOOT_LINES.length - 1) {
-          await new Promise((resolve) => {
-            window.setTimeout(resolve, 200);
-          });
-        }
-      }
-      if (cancelled) return;
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 800);
-      });
-      if (cancelled) return;
-      setBootVisible(false);
-    };
-    runBootSequence();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!heroVisible) return;
     if (typeIntervalRef.current) clearTimeout(typeIntervalRef.current);
     typeIntervalRef.current = window.setTimeout(() => {
       if (!isDeleting) {
@@ -80,7 +36,7 @@ export default function Hero() {
     return () => {
       if (typeIntervalRef.current) clearTimeout(typeIntervalRef.current);
     };
-  }, [heroVisible, isDeleting, role, typed]);
+  }, [isDeleting, role, typed]);
 
   const handleResumeDownload = () => {
     const maybeFathom = (window as Window & { fathom?: { trackGoal: (id: string, value: number) => void } }).fathom;
@@ -100,30 +56,17 @@ export default function Hero() {
         @keyframes blink {
           50% { opacity: 0; }
         }
+        .hero-enter {
+          animation: heroEnter 0.6s ease-out both;
+        }
+        @keyframes heroEnter {
+          from { opacity: 0; transform: translateY(16px); }
+        }
       `}</style>
       <div className="flex w-full flex-col gap-8 md:flex-row md:gap-8">
         <div className="w-full md:w-[55%]">
-          <motion.div
-            initial={false}
-            animate={bootVisible ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
-            transition={{ duration: 0.45, ease: "easeInOut" }}
-            style={{ overflow: "hidden" }}
-            onAnimationComplete={() => {
-              if (!bootVisible) setHeroVisible(true);
-            }}
-            className="font-mono text-sm text-accent-cyan"
-          >
-            {bootText.map((line, index) => (
-              <p key={BOOT_LINES[index]}>{line}</p>
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={heroVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className={heroVisible ? "mt-0" : "hidden"}
-          >
+          <div className="hero-enter">
+            <p className="mb-4 font-mono text-sm text-accent-cyan">&gt; backend_engineer.go loaded · press / for the terminal</p>
             <h1
               className="font-extrabold"
               style={{
@@ -132,7 +75,7 @@ export default function Hero() {
                 letterSpacing: "-0.04em",
               }}
             >
-              <span style={{ color: "#e6edf3", display: "block" }}>Aastha</span>
+              <span className="block text-text-primary">Aastha</span>
               <span
                 style={{
                   display: "block",
@@ -152,7 +95,7 @@ export default function Hero() {
             </p>
             <p className="mt-4 text-lg text-text-secondary">{personal.tagline}</p>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-3">
               <button
                 onClick={handleResumeDownload}
                 className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-white"
@@ -162,24 +105,32 @@ export default function Hero() {
                 <ArrowRight size={14} />
               </button>
               <a
-                href={personal.linkedin}
+                href="#projects"
+                className="rounded-lg border border-border px-6 py-3 text-sm text-text-secondary transition-colors duration-200 hover:border-accent-blue hover:text-text-primary"
+              >
+                See my work
+              </a>
+              <a
+                href={personal.github}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-lg border px-6 py-3 text-sm transition-colors duration-200"
-                style={{ borderColor: "#30363d", color: "#8b949e" }}
-                onMouseEnter={(event) => {
-                  event.currentTarget.style.borderColor = "#3B82F6";
-                  event.currentTarget.style.color = "#e6edf3";
-                }}
-                onMouseLeave={(event) => {
-                  event.currentTarget.style.borderColor = "#30363d";
-                  event.currentTarget.style.color = "#8b949e";
-                }}
+                aria-label="GitHub"
+                className="inline-flex items-center rounded-lg border border-border px-4 py-3 text-text-secondary transition-colors duration-200 hover:border-accent-blue hover:text-text-primary"
               >
-                View on LinkedIn
+                <GithubIcon size={16} />
               </a>
             </div>
-          </motion.div>
+
+            <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-border pt-6">
+              {heroStats.map((stat) => (
+                <div key={stat.label}>
+                  <dt className="sr-only">{stat.label}</dt>
+                  <dd className="font-mono text-2xl font-bold text-text-primary">{stat.value}</dd>
+                  <dd className="mt-1 font-mono text-[10px] uppercase tracking-widest text-text-secondary">{stat.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
         <div className="hidden w-full md:block md:w-[45%]">
           <NodeGraph className="h-[350px] w-full rounded-xl border border-border bg-bg-secondary" />
